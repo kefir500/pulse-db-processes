@@ -1,0 +1,44 @@
+{
+    "name": "kefir500/pulse-db-processes",
+    "description": "Database process monitoring for Laravel Pulse",
+    "keywords": [
+        "laravel",
+        "pulse",
+        "database",
+        "processes"
+    ],
+    "homepage": "https://github.com/kefir500/pulse-db-processes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Gorishnyak",
+            "email": "kefir500@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/pulse": "^1.0",
+        "spatie/laravel-package-tools": "^1.16",
+        "illuminate/contracts": "^10.0||^11.0||^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kefir500\\PulseDbProcesses\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kefir500\\PulseDbProcesses\\PulseDbProcessesServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
