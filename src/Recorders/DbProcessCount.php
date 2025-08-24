@@ -36,11 +36,19 @@ class DbProcessCount
         $connections = $this->config->get('pulse.recorders.' . self::class . '.connections', ['default']);
 
         foreach ($connections as $connection) {
-            $processes = DB::connection($connection)->scalar('SELECT COUNT(*) FROM information_schema.PROCESSLIST');
+            $processes = DB::connection($connection)->table('information_schema.PROCESSLIST')->get();
+
             $this->pulse->record(
                 type: 'db_process_count',
                 key: $connection,
-                value: $processes,
+                value: $processes->count(),
+                timestamp: $event->time,
+            )->max()->onlyBuckets();
+
+            $this->pulse->record(
+                type: 'db_process_time',
+                key: $connection,
+                value: $processes->whereIn('COMMAND', $this->commands)->max('TIME'),
                 timestamp: $event->time,
             )->max()->onlyBuckets();
         }
